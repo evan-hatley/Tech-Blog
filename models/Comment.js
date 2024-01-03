@@ -22,7 +22,7 @@ Comment.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: User,
+                model: 'user',
                 key: 'id'
             }
         },
@@ -31,7 +31,7 @@ Comment.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Post',
+                model: 'post',
                 key: 'id'
             }
         }
@@ -42,7 +42,7 @@ Comment.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'project',
+    modelName: 'comment',
   }
 
 );
