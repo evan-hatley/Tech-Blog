@@ -1,19 +1,34 @@
 const router = require('express').Router();
-const {User, Post, Comment} = require('../../models');
+const { Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.get('/', (req, res) => {
-    Comment.findAll
+router.get('/', async (req, res) => {
+    try {
+      const comments = await Comment.findAll( {   
+      });
+      res.status(200).json(comments);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+    });
 
-});
+    router.get('/:id', async (req, res) => {
+        try {
+          const comments = await Comment.findByPk(req.params.id, {
+          });
+          res.status(200).json(comments);
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      });
 
-router.post('/', withAuth, (req, res) => {
-    Comment.create
-
-});
-
-router.delete('/:id', withAuth, (req, res) => {
-    Comment.destroy
-
-
-})
+      router.delete('/:id', async (req, res) => {
+        try {
+          const comments = await Comment.destroy({
+            where: { id: req.params.id }
+          });
+          res.status(200).json(comments);
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      });
