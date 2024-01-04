@@ -14,7 +14,11 @@ router.get('/', (req, res) => {
 
     router.post('/', withAuth, (req, res) => {
         try {
-        const comments =  Comment.create(req.body);
+        const comments =  Comment.create({
+            content: req.body.content,
+            userId: req.session.userId,
+            postId: req.body.postId
+        });
         res.status(200).json(comments);
         } catch (err) {
           res.status(400).json(err);

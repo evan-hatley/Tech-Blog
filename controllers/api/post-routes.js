@@ -25,7 +25,11 @@ router.get('/', (req, res) => {
 
       router.post('/', withAuth, (req, res) => {
         try {
-        const posts =  Post.create(req.body);
+        const posts =  Post.create({
+            title: req.body.title,
+            content: req.body.content,
+            userId: req.session.userId
+        });
         res.status(200).json(posts);
         } catch (err) {
           res.status(400).json(err);
@@ -34,8 +38,9 @@ router.get('/', (req, res) => {
 
       router.put('/:id', withAuth, (req, res) => {
         try {
-          const posts = Post.update(req.body, {
-            where: { id: req.params.id }
+          const posts = Post.update({
+            title: req.body.title,
+            content: req.body.content
           });
           res.status(200).json(posts);
         } catch (err) {

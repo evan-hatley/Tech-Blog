@@ -13,3 +13,11 @@ router.get('/', withAuth, (req, res) => {
     }
     });
 
+    router.post('/', withAuth, (req, res) => {
+        try {
+        const posts =  Post.create(req.body);
+        res.status(200).json(posts);
+        } catch (err) {
+          res.status(400).json(err);
+        }
+      });
