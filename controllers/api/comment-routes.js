@@ -8,7 +8,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', withAuth, (req, res) => {
-
+    Comment.create
 
 });
 
+router.delete('/:id', withAuth, (req, res) => {
+    Comment.destroy
+
+
+})
