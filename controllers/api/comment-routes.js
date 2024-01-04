@@ -2,9 +2,9 @@ const router = require('express').Router();
 const { Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
     try {
-      const comments = await Comment.findAll( {   
+      const comments = Comment.findAll( {   
       });
       res.status(200).json(comments);
     } catch (err) {
@@ -12,19 +12,18 @@ router.get('/', async (req, res) => {
     }
     });
 
-    router.get('/:id', async (req, res) => {
+    router.post('/', withAuth, (req, res) => {
         try {
-          const comments = await Comment.findByPk(req.params.id, {
-          });
-          res.status(200).json(comments);
+        const comments =  Comment.create(req.body);
+        res.status(200).json(comments);
         } catch (err) {
-          res.status(500).json(err);
+          res.status(400).json(err);
         }
       });
 
-      router.delete('/:id', async (req, res) => {
+      router.delete('/:id', withAuth, (req, res) => {
         try {
-          const comments = await Comment.destroy({
+          const comments = Comment.destroy({
             where: { id: req.params.id }
           });
           res.status(200).json(comments);

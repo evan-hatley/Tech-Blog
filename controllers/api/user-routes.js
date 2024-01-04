@@ -2,9 +2,9 @@ const router = require('express').Router();
 const { User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
     try {
-      const users = await User.findAll( {
+      const users = User.findAll( {
       });
       res.status(200).json(users);
     } catch (err) {
@@ -12,9 +12,9 @@ router.get('/', async (req, res) => {
     }
     });
 
-    router.get('/:id', async (req, res) => {
+    router.get('/:id', (req, res) => {
         try {
-          const users = await User.findByPk(req.params.id, {
+          const users = User.findByPk(req.params.id, {
           });
           res.status(200).json(users);
         } catch (err) {
@@ -22,9 +22,9 @@ router.get('/', async (req, res) => {
         }
       });
 
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
     try {
-      const userData = await User.create(req.body);
+      const userData = User.create(req.body);
   
       req.session.save(() => {
         req.session.user_id = userData.id;
@@ -37,9 +37,9 @@ router.post('/', async (req, res) => {
     }
   });
 
-router.post('/login', async (req, res) => {
+router.post('/login', (req, res) => {
     try {
-      const userData = await User.findOne({ where: { email: req.body.email } });
+      const userData = User.findOne({ where: { email: req.body.email } });
   
       if (!userData) {
         res
@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
         return;
       }
   
-      const validPassword = await userData.checkPassword(req.body.password);
+      const validPassword = userData.checkPassword(req.body.password);
   
       if (!validPassword) {
         res

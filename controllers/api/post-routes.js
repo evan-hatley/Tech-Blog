@@ -3,9 +3,9 @@ const {User ,Post, Comment} = require('../../models');
 const withAuth = require('../../utils/auth');
 
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
     try {
-      const posts = await Post.findAll( {    
+      const posts = Post.findAll( {    
       });
       res.status(200).json(posts);
     } catch (err) {
@@ -13,9 +13,9 @@ router.get('/', async (req, res) => {
     }
     });
 
-    router.get('/:id', async (req, res) => {
+    router.get('/:id', (req, res) => {
         try {
-          const posts = await Post.findByPk(req.params.id, {
+          const posts = Post.findByPk(req.params.id, {
           });
           res.status(200).json(posts);
         } catch (err) {
@@ -23,18 +23,18 @@ router.get('/', async (req, res) => {
         }
       });
 
-      router.post('/', async (req, res) => {
+      router.post('/', withAuth, (req, res) => {
         try {
-        const posts = await Post.create(req.body);
+        const posts =  Post.create(req.body);
         res.status(200).json(posts);
         } catch (err) {
           res.status(400).json(err);
         }
       });
 
-      router.put('/:id', async (req, res) => {
+      router.put('/:id', withAuth, (req, res) => {
         try {
-          const posts = await Post.update(req.body, {
+          const posts = Post.update(req.body, {
             where: { id: req.params.id }
           });
           res.status(200).json(posts);
@@ -43,9 +43,9 @@ router.get('/', async (req, res) => {
         }
       });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     try {
-      const posts = await Post.destroy({
+      const posts = Post.destroy({
         where: { id: req.params.id }
       });
       res.status(200).json(posts);
